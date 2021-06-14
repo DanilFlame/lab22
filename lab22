@@ -1,0 +1,75 @@
+using System;
+
+class Program
+{
+    static int IndexOfMin(int[] array, int n)
+    {
+        int result = n;
+        for (var i = n; i < array.Length; ++i)
+        {
+            if (array[i] < array[result])
+            {
+                result = i;
+            }
+        }
+
+        return result;
+    }
+
+    //метод для обміну елементів
+    static void Swap(ref int x, ref int y)
+    {
+        var t = x;
+        x = y;
+        y = t;
+    }
+
+    //сортування вибором
+    static int[] SelectionSort(int[] array, int currentIndex = 0)
+    {
+        if (currentIndex == array.Length)
+            return array;
+
+        var index = IndexOfMin(array, currentIndex);
+        if (index != currentIndex)
+        {
+            Swap(ref array[index], ref array[currentIndex]);
+        }
+
+        return SelectionSort(array, currentIndex + 1);
+    }
+
+    private static void Main(string[] args)
+    {
+        Random rand = new Random();
+        Console.Write("Ведiть розмiр масиву: ");
+        try
+        {
+            int size = Convert.ToInt32(Console.ReadLine());
+
+            int[] arr = new int[size];
+
+            Console.WriteLine("Массив:");
+
+            for (int i = 0; i < size; i++)
+            {
+                arr[i] = rand.Next(0, 11);
+                Console.Write(arr[i] + " ");
+            }
+            Console.WriteLine("\nВпорядкований масив: \n{0}", string.Join(" ", SelectionSort(arr)));
+        }
+        
+
+         catch (FormatException)
+         {
+        Console.WriteLine("Error, enter a number.");
+         }
+        
+        finally
+        {
+            Console.WriteLine("\nEnd of program");
+        }
+
+       
+    }
+}
